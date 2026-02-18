@@ -125,7 +125,7 @@ timeframes:
   - "1h"   # 1-hour
   - "4h"   # 4-hour
   - "1d"   # 1-day
-  minimum_alignment: 3  # At least 3 timeframes must agree
+minimum_alignment: 3  # At least 3 timeframes must agree
 
 # ML/AI Models Configuration
 ml_models:
