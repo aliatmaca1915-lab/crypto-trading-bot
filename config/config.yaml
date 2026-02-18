@@ -1,0 +1,237 @@
+# Cryptocurrency Trading Bot - Phase 2 Configuration
+
+# Trading Mode (CRITICAL: Default is PAPER TRADING)
+mode: "paper"  # Options: "paper" or "real"
+
+# API Credentials (Binance)
+api:
+  binance:
+    api_key: "YOUR_BINANCE_API_KEY"
+    api_secret: "YOUR_BINANCE_API_SECRET"
+    testnet: true  # Use testnet for testing
+
+# Cryptocurrencies to track
+cryptocurrencies:
+  - "BTC/USDT"
+  - "ETH/USDT"
+  - "BNB/USDT"
+  - "XRP/USDT"
+  - "ADA/USDT"
+  - "SOL/USDT"
+  - "DOGE/USDT"
+  - "DOT/USDT"   # Polkadot
+  - "LTC/USDT"
+  - "ADA/USDT"   # Cardano (duplicate removed in code)
+
+# Leverage Settings
+leverage:
+  fixed_leverage: 10  # 10x fixed leverage
+  liquidation_buffer: 0.04  # 4% buffer (3-5% range)
+
+# Capital Settings
+capital:
+  initial_capital: 10000  # Initial capital in USDT
+  position_limit_per_coin: 0.05  # 5% of capital per coin
+  daily_loss_limit: 0.05  # 5% daily loss limit
+  weekly_loss_limit: 0.10  # 10% weekly loss limit
+
+# Scoring Thresholds
+scoring:
+  minimum_score: 60  # Minimum score for any trade
+  silver_min: 60
+  silver_max: 79
+  gold_min: 80
+  gold_max: 89
+  diamond_min: 90
+  diamond_max: 100
+
+# Position Sizing (Base percentage × Leverage)
+position_sizing:
+  silver:
+    base_percentage: 0.10  # 10% of capital
+    effective_position: 1.0  # 100% (10% × 10x)
+    risk_per_trade: 0.025  # 2.5% average
+    stop_loss_pct: 0.025  # 2.5% average
+    take_profit_pct: 0.09  # 9% average
+  gold:
+    base_percentage: 0.15  # 15% of capital
+    effective_position: 1.5  # 150% (15% × 10x)
+    risk_per_trade: 0.035  # 3.5% average
+    stop_loss_pct: 0.03  # 3% average
+    take_profit_pct: 0.135  # 13.5% average
+  diamond:
+    base_percentage: 0.20  # 20% of capital
+    effective_position: 2.0  # 200% (20% × 10x)
+    risk_per_trade: 0.045  # 4.5% average
+    stop_loss_pct: 0.025  # 2.5% average
+    take_profit_pct: 0.175  # 17.5% average
+
+# Technical Indicators Weights (Total: 45 points)
+indicators:
+  rsi:
+    weight: 8
+    period: 14
+    oversold: 30
+    overbought: 70
+  macd:
+    weight: 8
+    fast_period: 12
+    slow_period: 26
+    signal_period: 9
+  bollinger_bands:
+    weight: 7
+    period: 20
+    std_dev: 2
+  ema_sma:
+    weight: 8
+    ema_short: 9
+    ema_medium: 21
+    ema_long: 50
+    sma_period: 200
+  stochastic:
+    weight: 7
+    k_period: 14
+    d_period: 3
+    oversold: 20
+    overbought: 80
+  atr:
+    weight: 7
+    period: 14
+
+# Market Intelligence Weights (Total: 30 points)
+market_intelligence:
+  fear_greed_index:
+    weight: 10
+  on_chain_metrics:
+    weight: 8
+  funding_rates:
+    weight: 6
+  liquidation_levels:
+    weight: 6
+
+# Advanced Signals Weights (Total: 25 points)
+advanced_signals:
+  divergence:
+    weight: 8
+  order_book_imbalance:
+    weight: 8
+  volume_profile:
+    weight: 9
+
+# Multi-Timeframe Analysis
+timeframes:
+  - "5m"   # 5-minute
+  - "15m"  # 15-minute
+  - "1h"   # 1-hour
+  - "4h"   # 4-hour
+  - "1d"   # 1-day
+  minimum_alignment: 3  # At least 3 timeframes must agree
+
+# ML/AI Models Configuration
+ml_models:
+  lstm:
+    enabled: true
+    sequence_length: 60
+    units: 128
+    dropout: 0.2
+  xgboost:
+    enabled: true
+    n_estimators: 100
+    max_depth: 7
+    learning_rate: 0.1
+  random_forest:
+    enabled: true
+    n_estimators: 100
+    max_depth: 10
+  gradient_boosting:
+    enabled: true
+    n_estimators: 100
+    learning_rate: 0.1
+  confidence_threshold:
+    ignore_below: 50
+    reduce_position_below: 70
+    normal_position_min: 70
+    normal_position_max: 90
+    increase_position_above: 90
+
+# Risk Management
+risk_management:
+  dynamic_stop_loss:
+    atr_multiplier: 2.0
+    use_support_levels: true
+    volatility_adjustment: true
+    trailing_stop: true
+  take_profit:
+    multiple_levels: true
+    tp1_percentage: 0.4  # 40% of position
+    tp2_percentage: 0.3  # 30% of position
+    tp3_percentage: 0.3  # 30% of position
+    use_trailing: true
+
+# Liquidity Checks
+liquidity:
+  minimum_liquidity_score: 60
+  maximum_spread_percentage: 0.001  # 0.1%
+  minimum_order_book_depth: 100000  # USDT
+
+# Execution Strategy
+execution:
+  strategy: "vwap"  # Options: "vwap", "twap", "market", "limit"
+  order_type: "limit"  # Default order type
+  slippage_tolerance: 0.005  # 0.5%
+  retry_attempts: 3
+  retry_delay: 5  # seconds
+
+# Backtesting
+backtesting:
+  enabled: false
+  start_date: "2019-01-01"
+  end_date: "2024-12-31"
+  initial_capital: 10000
+  commission: 0.001  # 0.1% per trade
+  slippage: 0.0005  # 0.05%
+
+# Notifications
+notifications:
+  email:
+    enabled: false
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    sender_email: "your_email@gmail.com"
+    sender_password: "your_password"
+    recipient_email: "recipient@gmail.com"
+  telegram:
+    enabled: false
+    bot_token: "YOUR_TELEGRAM_BOT_TOKEN"
+    chat_id: "YOUR_CHAT_ID"
+  discord:
+    enabled: false
+    webhook_url: "YOUR_DISCORD_WEBHOOK_URL"
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file_logging: true
+  console_logging: true
+  log_file: "logs/trading_bot.log"
+  max_file_size: 10485760  # 10 MB
+  backup_count: 5
+
+# Database
+database:
+  type: "sqlite"
+  path: "data/trading_bot.db"
+
+# Update Frequency
+update:
+  data_refresh_interval: 5  # seconds
+  position_check_interval: 10  # seconds
+  risk_check_interval: 30  # seconds
+  model_retrain_interval: 3600  # 1 hour (lightweight)
+  full_retrain_interval: 86400  # 24 hours (full retrain)
+
+# Safety Features
+safety:
+  emergency_shutdown_loss: 0.15  # 15% total loss triggers emergency shutdown
+  max_concurrent_positions: 5
+  require_confirmation_real_mode: true
