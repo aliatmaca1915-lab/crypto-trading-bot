@@ -49,7 +49,8 @@ class MarketIntelligence:
                 self.fear_greed_timestamp = datetime.now()
                 return value
         except Exception as e:
-            # If API fails, return neutral value
+            # If API fails, log warning and return neutral value
+            print(f"Warning: Could not fetch Fear & Greed Index: {e}. Using neutral value (50).")
             return 50
         
         return 50

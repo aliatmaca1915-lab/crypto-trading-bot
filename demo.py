@@ -5,8 +5,8 @@ Demonstrates the bot's scoring and analysis capabilities without executing trade
 import sys
 from pathlib import Path
 
-# Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Add project root to path for imports
+sys.path.insert(0, str(Path(__file__).parent))
 
 from src.core.config import get_config
 from src.core.logger import get_logger
