@@ -10,16 +10,25 @@ import warnings
 warnings.filterwarnings('ignore')
 
 try:
-    from tensorflow import keras
-    from tensorflow.keras.models import Sequential, load_model
-    from tensorflow.keras.layers import LSTM, Dense, Dropout
-    from tensorflow.keras.optimizers import Adam
+    # Try Keras 3.x standalone first
+    try:
+        import keras
+        from keras.models import Sequential, load_model
+        from keras.layers import LSTM, Dense, Dropout
+        from keras.optimizers import Adam
+    except ImportError:
+        # Fallback to tensorflow.keras for compatibility
+        from tensorflow import keras
+        from tensorflow.keras.models import Sequential, load_model
+        from tensorflow.keras.layers import LSTM, Dense, Dropout
+        from tensorflow.keras.optimizers import Adam
+    
     from sklearn.preprocessing import MinMaxScaler
     from sklearn.model_selection import train_test_split
     TENSORFLOW_AVAILABLE = True
 except ImportError:
     TENSORFLOW_AVAILABLE = False
-    print("Warning: TensorFlow not available. ML features will be limited.")
+    print("Warning: TensorFlow/Keras not available. ML features will be limited.")
 
 from config import Config
 
