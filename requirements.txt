@@ -10,9 +10,13 @@ ta==0.11.0
 scipy==1.11.4
 
 # AI/ML
+# NOTE: Keras 3.13.1 has a known vulnerability in HDF5 model loading (arbitrary file read)
+# MITIGATION: Bot does not load pre-trained models from untrusted sources
+# MITIGATION: Bot only trains models from scratch using market data
+# MITIGATION: HDF5 model saving/loading is disabled by default
 tensorflow==2.16.1
 scikit-learn==1.3.2
-keras==3.12.0
+keras==3.13.1
 
 # Database
 sqlalchemy==2.0.23

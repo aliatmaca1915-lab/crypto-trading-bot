@@ -1,6 +1,10 @@
 """
 AI/ML Engine Module
 Implements LSTM Neural Networks, Pattern Recognition, and Predictive Models
+
+SECURITY NOTE: This module does NOT load pre-trained models from external sources
+to mitigate Keras HDF5 arbitrary file read vulnerability (no patch available as of 3.13.1).
+Models are trained from scratch using only market data.
 """
 import numpy as np
 import pandas as pd
@@ -13,13 +17,13 @@ try:
     # Try Keras 3.x standalone first
     try:
         import keras
-        from keras.models import Sequential, load_model
+        from keras.models import Sequential
         from keras.layers import LSTM, Dense, Dropout
         from keras.optimizers import Adam
     except ImportError:
         # Fallback to tensorflow.keras for compatibility
         from tensorflow import keras
-        from tensorflow.keras.models import Sequential, load_model
+        from tensorflow.keras.models import Sequential
         from tensorflow.keras.layers import LSTM, Dense, Dropout
         from tensorflow.keras.optimizers import Adam
     
@@ -33,15 +37,32 @@ except ImportError:
 from config import Config
 
 
+# SECURITY: Disable HDF5 model loading to mitigate arbitrary file read vulnerability
+# Models are created and trained from scratch only
+ALLOW_MODEL_LOADING = False
+
+
 class AIEngine:
-    """AI/ML engine for price prediction and pattern recognition"""
+    """
+    AI/ML engine for price prediction and pattern recognition
+    
+    SECURITY FEATURES:
+    - Models are trained from scratch only (no external model loading)
+    - No HDF5 file loading from untrusted sources
+    - Data is validated before use in training
+    """
     
     def __init__(self):
-        """Initialize AI engine"""
+        """Initialize AI engine with security safeguards"""
         self.config = Config
         self.models = {}
         self.scalers = {}
         self.tensorflow_available = TENSORFLOW_AVAILABLE
+        
+        # Security: Log that we don't load external models
+        if self.tensorflow_available:
+            print("ℹ️  AI Engine initialized - Models trained from scratch only (security hardened)")
+
     
     def prepare_data(self, df: pd.DataFrame, lookback: int = None) -> Tuple[np.ndarray, np.ndarray, MinMaxScaler]:
         """Prepare data for LSTM training"""
