@@ -6,6 +6,29 @@
 
 A professional, enterprise-grade cryptocurrency trading bot featuring advanced scoring algorithms, ML-powered predictions, and safe leverage management.
 
+## 🇹🇷 Türkçe Kullanım Kılavuzu
+
+**Türkçe detaylı kullanım kılavuzu için**: [NASIL_KULLANILIR.md](NASIL_KULLANILIR.md) dosyasına bakın.
+
+**Hızlı başlangıç**:
+```bash
+# 1. Projeyi indirin
+git clone https://github.com/aliatmaca1915-lab/crypto-trading-bot.git
+cd crypto-trading-bot
+
+# 2. Gerekli paketleri yükleyin
+pip install -r requirements.txt
+
+# 3. Demo'yu çalıştırın (risk yok!)
+python demo.py
+```
+
+📖 Detaylı Türkçe belgeler:
+- [NASIL_KULLANILIR.md](NASIL_KULLANILIR.md) - Kapsamlı kullanım kılavuzu
+- [DURUM_RAPORU.md](DURUM_RAPORU.md) - Durum raporu
+
+---
+
 ## ⚠️ IMPORTANT SAFETY NOTICE
 
 **This bot runs in PAPER TRADING mode by default.** No real money is risked unless you explicitly switch to real trading mode and configure API credentials.
